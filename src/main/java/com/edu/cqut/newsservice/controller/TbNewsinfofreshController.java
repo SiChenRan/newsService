@@ -1,5 +1,6 @@
 package com.edu.cqut.newsservice.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.edu.cqut.newsservice.entity.TbNewsinfofresh;
 import com.edu.cqut.newsservice.entity.TbNewsuser;
@@ -14,14 +15,14 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author Haibara
  * @since 2023-09-15
  */
 @RestController
-@CrossOrigin
+@CrossOrigin//允许跨域请求
 @RequestMapping("/news")
 public class TbNewsinfofreshController {
 
@@ -39,11 +40,11 @@ public class TbNewsinfofreshController {
      */
 //    @Auth(roles = {"ADMIN","SALES","SUPERVISOR","MANAGER"})
     @GetMapping("/getNewsList")
-    public TableResult<TbNewsinfofresh> getUserList(Integer limit, Integer page, HttpServletRequest request) {
+    public TableResult<TbNewsinfofresh> getNewsList(Integer limit, Integer page, HttpServletRequest request) {
         if (limit == null && page == null) {
             List<TbNewsinfofresh> newsinfofreshList = newsinfofreshService.list();
             // getTotal()方法返回表里的总记录数,getRecords()方法返回当前页的数据列表
-            return TableResult.ok("查询成功",newsinfofreshList.size(),newsinfofreshList);
+            return TableResult.ok("查询成功", newsinfofreshList.size(), newsinfofreshList);
 
         } else {
             Page<TbNewsinfofresh> newsinfoPage = new Page<>(page, limit);
@@ -53,23 +54,30 @@ public class TbNewsinfofreshController {
         }
     }
 
+    @GetMapping("/getNewsInfo")
+    public TableResult<TbNewsinfofresh> getNewsById(Integer newsfreId) {
+        System.out.println(newsfreId);
+        TbNewsinfofresh newsinfofresh = newsinfofreshService.getById(newsfreId);
+        return TableResult.ok("查看成功", newsinfofresh);
+    }
+
     //    @Auth(roles = {"SALES","ADMIN"})
-    @PostMapping("/updateUser")
-    public TableResult<TbNewsinfofresh> updateCustomer(TbNewsinfofresh news) {
+    @PostMapping("/updateNews")
+    public TableResult<TbNewsinfofresh> updateNews(TbNewsinfofresh news) {
         newsinfofreshService.updateById(news);
         return TableResult.ok("修改用户信息成功！");
     }
 
     //    @Auth(roles = {"SALES","ADMIN"})
-    @PostMapping("/addUser")//映射的地址与方法名没有关系
-    public TableResult<TbNewsinfofresh> addCustomer(TbNewsinfofresh news) {
+    @PostMapping("/addNews")//映射的地址与方法名没有关系
+    public TableResult<TbNewsinfofresh> addNews(TbNewsinfofresh news) {
         newsinfofreshService.save(news);
         return TableResult.ok("新增客户信息成功！");
     }
 
     //    @Auth(roles = {"SALES","ADMIN"})
-    @PostMapping("/deleteUser")//映射的地址与方法名没有关系
-    public TableResult<TbNewsuser> deleteCustomer(Integer[] ids) {//参数名要和前端的ajax方法中的data参数里面的属性名字一致
+    @PostMapping("/deleteNews")//映射的地址与方法名没有关系
+    public TableResult<TbNewsuser> deleteNews(Integer[] ids) {//参数名要和前端的ajax方法中的data参数里面的属性名字一致
         newsinfofreshService.removeByIds(Arrays.asList(ids));//asList用于将数组转化为List
         return TableResult.ok("删除客户信息成功！");
     }
