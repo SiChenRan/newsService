@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Haibara
- * @since 2023-09-22
+ * @since 2023-09-27
  */
 public interface ITbNewscommService extends IService<TbNewscomm> {
 

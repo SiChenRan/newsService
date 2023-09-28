@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author Haibara
- * @since 2023-09-22
+ * @since 2023-09-27
  */
 @TableName("tb_newscomm")
 public class TbNewscomm implements Serializable {
@@ -38,7 +38,7 @@ public class TbNewscomm implements Serializable {
     /**
      * 新闻编号
      */
-    private Integer newsId;
+    private Integer newsfreId;
 
     /**
      * 用户编号
@@ -74,12 +74,12 @@ public class TbNewscomm implements Serializable {
         this.createDate = createDate;
     }
 
-    public Integer getNewsId() {
-        return newsId;
+    public Integer getNewsfreId() {
+        return newsfreId;
     }
 
-    public void setNewsId(Integer newsId) {
-        this.newsId = newsId;
+    public void setNewsfreId(Integer newsfreId) {
+        this.newsfreId = newsfreId;
     }
 
     public Integer getUserId() {
@@ -104,7 +104,7 @@ public class TbNewscomm implements Serializable {
         "commId = " + commId +
         ", commContent = " + commContent +
         ", createDate = " + createDate +
-        ", newsId = " + newsId +
+        ", newsfreId = " + newsfreId +
         ", userId = " + userId +
         ", commStatus = " + commStatus +
         "}";

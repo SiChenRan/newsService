@@ -1,5 +1,7 @@
 package com.edu.cqut.newsservice.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.edu.cqut.newsservice.entity.TbNewsuser;
 import com.edu.cqut.newsservice.service.ITbNewsuserService;
@@ -13,7 +15,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author Haibara
@@ -45,7 +47,7 @@ public class TbNewsuserController {
         if (limit == null && page == null) {
             List<TbNewsuser> newsuserList = iTbNewsuserService.list();
             // getTotal()方法返回表里的总记录数,getRecords()方法返回当前页的数据列表
-            return TableResult.ok("查询成功",newsuserList.size(),newsuserList);
+            return TableResult.ok("查询成功", newsuserList.size(), newsuserList);
 
         } else {
             Page<TbNewsuser> newsuserPage = new Page<>(page, limit);
@@ -55,21 +57,30 @@ public class TbNewsuserController {
         }
     }
 
-//    @Auth(roles = {"SALES","ADMIN"})
+    @GetMapping("/getPublishers")
+    public TableResult<TbNewsuser> getPublishers(TbNewsuser user) {
+        QueryWrapper<TbNewsuser> wrapper = new QueryWrapper<>();
+        wrapper.eq("publish_right", 2);
+        Page<TbNewsuser> publisher = new Page<>();
+        IPage<TbNewsuser> page1 = iTbNewsuserService.page(publisher, wrapper);
+        return TableResult.ok("成功", page1.getTotal(), page1.getRecords());
+    }
+
+    //    @Auth(roles = {"SALES","ADMIN"})
     @PostMapping("/updateUser")
     public TableResult<TbNewsuser> updateCustomer(TbNewsuser user) {
         iTbNewsuserService.updateById(user);
         return TableResult.ok("修改用户信息成功！");
     }
 
-//    @Auth(roles = {"SALES","ADMIN"})
+    //    @Auth(roles = {"SALES","ADMIN"})
     @PostMapping("/addUser")//映射的地址与方法名没有关系
     public TableResult<TbNewsuser> addCustomer(TbNewsuser user) {
         iTbNewsuserService.save(user);
         return TableResult.ok("新增客户信息成功！");
     }
 
-//    @Auth(roles = {"SALES","ADMIN"})
+    //    @Auth(roles = {"SALES","ADMIN"})
     @PostMapping("/deleteUser")//映射的地址与方法名没有关系
     public TableResult<TbNewsuser> deleteCustomer(Integer[] ids) {//参数名要和前端的ajax方法中的data参数里面的属性名字一致
         iTbNewsuserService.removeByIds(Arrays.asList(ids));//asList用于将数组转化为List

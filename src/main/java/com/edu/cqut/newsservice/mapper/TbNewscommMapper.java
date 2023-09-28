@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Haibara
- * @since 2023-09-22
+ * @since 2023-09-27
  */
 public interface TbNewscommMapper extends BaseMapper<TbNewscomm> {
 
