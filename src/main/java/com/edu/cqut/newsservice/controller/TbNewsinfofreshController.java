@@ -1,14 +1,12 @@
 package com.edu.cqut.newsservice.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.edu.cqut.newsservice.entity.TbNewsinfofresh;
 import com.edu.cqut.newsservice.entity.TbNewsuser;
 import com.edu.cqut.newsservice.mapper.TbNewsinfofreshMapper;
 import com.edu.cqut.newsservice.service.ITbNewsinfofreshService;
 import com.edu.cqut.newsservice.util.TableResult;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,15 +73,14 @@ public class TbNewsinfofreshController {
     @GetMapping("/getNewsListByTypeId")
 
     public Map<String, Object> getNewsListByTypeId(Integer typeId) {
+        System.out.println("typeId is " + typeId);
         Map<String, Object> result = new HashMap<>();
-
         //构建一个查询的wrapper
         QueryWrapper<TbNewsinfofresh> wrapper = new QueryWrapper<>();
         //未删除
         wrapper.eq("type_id", typeId);
         //创建时间降序
         wrapper.orderByDesc("create_date");
-
         List<TbNewsinfofresh> list = newsinfofreshMapper.selectList(wrapper);
         result.put("data", list);
         return result;
@@ -103,6 +100,20 @@ public class TbNewsinfofreshController {
         wrapper.eq("news_title", newsTitle);
         TbNewsinfofresh newsinfofresh = newsinfofreshService.getOne(wrapper);
         return TableResult.ok("查看成功", newsinfofresh);
+    }
+
+        @GetMapping("/getNewsInfoByPublisherId")
+    public Map<String, Object> getNewsInfoByPublisherId(Integer publisherId) {
+        Map<String, Object> result = new HashMap<>();
+        //构建一个查询的wrapper
+        QueryWrapper<TbNewsinfofresh> wrapper = new QueryWrapper<>();
+        //未删除
+        wrapper.eq("user_id", publisherId);
+        //创建时间降序
+        wrapper.orderByDesc("create_date");
+        List<TbNewsinfofresh> list = newsinfofreshMapper.selectList(wrapper);
+        result.put("data", list);
+        return result;
     }
 
     //    @Auth(roles = {"SALES","ADMIN"})
