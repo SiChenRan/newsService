@@ -1,14 +1,16 @@
 package com.edu.cqut.newsservice.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Haibara
@@ -49,9 +51,19 @@ public class TbNewscomm implements Serializable {
      * 发布状态(1为已发布,-1为禁看)
      */
     private Integer commStatus;
+    @TableField(exist = false)
+    private TbNewsinfofresh news;
 
     public Integer getCommId() {
         return commId;
+    }
+
+    public TbNewsinfofresh getNews() {
+        return news;
+    }
+
+    public void setNews(TbNewsinfofresh news) {
+        this.news = news;
     }
 
     public void setCommId(Integer commId) {
@@ -101,12 +113,13 @@ public class TbNewscomm implements Serializable {
     @Override
     public String toString() {
         return "TbNewscomm{" +
-        "commId = " + commId +
-        ", commContent = " + commContent +
-        ", createDate = " + createDate +
-        ", newsfreId = " + newsfreId +
-        ", userId = " + userId +
-        ", commStatus = " + commStatus +
-        "}";
+                "commId=" + commId +
+                ", commContent='" + commContent + '\'' +
+                ", createDate=" + createDate +
+                ", newsfreId=" + newsfreId +
+                ", userId=" + userId +
+                ", commStatus=" + commStatus +
+                ", news=" + news +
+                '}';
     }
 }

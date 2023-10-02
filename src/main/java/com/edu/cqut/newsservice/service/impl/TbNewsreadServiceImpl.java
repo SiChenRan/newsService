@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Haibara
- * @since 2023-09-22
+ * @since 2023-10-01
  */
 @Service
 public class TbNewsreadServiceImpl extends ServiceImpl<TbNewsreadMapper, TbNewsread> implements ITbNewsreadService {

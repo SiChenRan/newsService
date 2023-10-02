@@ -13,29 +13,43 @@ public class TableResult<T> {
     private List<T> data;
     //实体对象
     private T obj;
+    private long sumCount;
 
-    public TableResult(int code, String msg, long count, List<T> data, T obj) {
+    public TableResult(int code, String msg, long count, List<T> data, T obj, long sum) {
         this.code = code;
         this.msg = msg;
         this.count = count;
         this.data = data;
         this.obj = obj;
+        this.sumCount = sum;
     }
 
+//    public TableResult(int code, String msg, long count, List<T> data, T obj) {
+//        this.code = code;
+//        this.msg = msg;
+//        this.count = count;
+//        this.data = data;
+//        this.obj = obj;
+//    }
+
     public static <T> TableResult<T> ok(String msg, long count, List<T> data) {
-        return new TableResult<T>(0, msg, count, data, null);
+        return new TableResult<T>(0, msg, count, data, null,0);
     }
 
     public static <T> TableResult<T> ok(String msg) {
-        return new TableResult<T>(0, msg, 0, null, null);
+        return new TableResult<T>(0, msg, 0, null, null,0);
+    }
+
+    public static <T> TableResult<T> ok(long sum) {
+        return new TableResult<T>(0, null, 0, null, null, sum);
     }
 
     public static <T> TableResult<T> ok(String msg, T obj) {
-        return new TableResult<T>(0, msg, 0, null, obj);
+        return new TableResult<T>(0, msg, 0, null, obj,0);
     }
 
     public static <T> TableResult<T> error(int code, String msg) {
-        return new TableResult<T>(1, msg, code, null, null);
+        return new TableResult<T>(1, msg, code, null, null,0);
     }
 
 

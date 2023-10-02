@@ -1,6 +1,7 @@
 package com.edu.cqut.newsservice.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author Haibara
- * @since 2023-09-22
+ * @since 2023-10-01
  */
 @TableName("tb_newsread")
 public class TbNewsread implements Serializable {
@@ -28,17 +29,28 @@ public class TbNewsread implements Serializable {
     /**
      * 新闻编号
      */
-    private Integer newsId;
+    private Integer newsfreId;
 
     /**
      * 用户编号
      */
     private Integer userId;
 
+    @TableField(exist = false)
+    private TbNewsinfofresh news;
+
     /**
      * 创建时间
      */
     private LocalDateTime createDate;
+
+    public TbNewsinfofresh getNews() {
+        return news;
+    }
+
+    public void setNews(TbNewsinfofresh news) {
+        this.news = news;
+    }
 
     public Integer getReadId() {
         return readId;
@@ -48,12 +60,12 @@ public class TbNewsread implements Serializable {
         this.readId = readId;
     }
 
-    public Integer getNewsId() {
-        return newsId;
+    public Integer getNewsfreId() {
+        return newsfreId;
     }
 
-    public void setNewsId(Integer newsId) {
-        this.newsId = newsId;
+    public void setNewsfreId(Integer newsfreId) {
+        this.newsfreId = newsfreId;
     }
 
     public Integer getUserId() {
@@ -75,10 +87,11 @@ public class TbNewsread implements Serializable {
     @Override
     public String toString() {
         return "TbNewsread{" +
-        "readId = " + readId +
-        ", newsId = " + newsId +
-        ", userId = " + userId +
-        ", createDate = " + createDate +
-        "}";
+                "readId=" + readId +
+                ", newsfreId=" + newsfreId +
+                ", userId=" + userId +
+                ", news=" + news +
+                ", createDate=" + createDate +
+                '}';
     }
 }

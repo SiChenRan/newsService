@@ -2,15 +2,18 @@ package com.edu.cqut.newsservice.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.edu.cqut.newsservice.entity.TbNewscomm;
+import com.edu.cqut.newsservice.entity.TbNewsinfofresh;
 import com.edu.cqut.newsservice.entity.TbNewsuser;
 import com.edu.cqut.newsservice.mapper.TbNewscommMapper;
 import com.edu.cqut.newsservice.service.ITbNewscommService;
+import com.edu.cqut.newsservice.service.ITbNewsinfofreshService;
 import com.edu.cqut.newsservice.service.ITbNewsuserService;
 import com.edu.cqut.newsservice.util.TableResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +35,10 @@ public class TbNewscommController {
     @Autowired
     private ITbNewsuserService newsuserService;
     @Autowired
+    private ITbNewsinfofreshService newsinfoService;
+    @Autowired
     private TbNewscommMapper commMapper;
+    private List<TbNewscomm> commentsList = new ArrayList<>();
 
     @PostMapping("/postComm")
     public TableResult<TbNewscomm> postComm(String comment, Integer newsfreId, String user) {
@@ -61,5 +67,25 @@ public class TbNewscommController {
         List<TbNewscomm> list = commMapper.selectList(wrapper);
         result.put("data", list);
         return result;
+    }
+
+    @GetMapping("/getSelfComments")
+    public TableResult<TbNewscomm> getSelfComments(String userName) {
+        QueryWrapper<TbNewsuser> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_name", userName);
+        QueryWrapper<TbNewscomm> commWrapper = new QueryWrapper<>();
+        commWrapper.eq("user_id", newsuserService.getOne(wrapper).getUserId());
+        commentsList = newscommService.list(commWrapper);
+        List<TbNewsinfofresh> newsList = newsinfoService.list();
+        for (int i = 0; i < commentsList.size(); i++) {
+            commentsList.get(i).setNews(newsList.get(commentsList.get(i).getNewsfreId() - 1));
+        }
+        return TableResult.ok("成功", 0, commentsList);
+    }
+
+    @PostMapping("/deleteSelfComment")
+    public TableResult<TbNewscomm> deleteComment(Integer commentId) {
+        newscommService.removeById(commentId);
+        return TableResult.ok("删除成功");
     }
 }
