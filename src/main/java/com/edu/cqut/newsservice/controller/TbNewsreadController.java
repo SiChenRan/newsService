@@ -62,7 +62,10 @@ public class TbNewsreadController {
         readWrapper.eq("user_id", userService.getOne(wrapper).getUserId());
         List<TbNewsread> reads = readService.list(readWrapper);
         for (int i = 0; i < reads.size(); i++) {
-            reads.get(i).setNews(newsList.get(reads.get(i).getNewsfreId() - 1));
+            if (reads.get(i).getNewsfreId() >= 454) {
+                break;
+            }
+            reads.get(i).setNews(newsList.get(reads.get(i).getNewsfreId()-1));
         }
         return TableResult.ok("成功", 0, reads);
     }

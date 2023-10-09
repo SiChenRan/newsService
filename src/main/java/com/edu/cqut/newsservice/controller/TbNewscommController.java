@@ -78,6 +78,9 @@ public class TbNewscommController {
         commentsList = newscommService.list(commWrapper);
         List<TbNewsinfofresh> newsList = newsinfoService.list();
         for (int i = 0; i < commentsList.size(); i++) {
+            if (i >= 453) {
+                break;
+            }
             commentsList.get(i).setNews(newsList.get(commentsList.get(i).getNewsfreId() - 1));
         }
         return TableResult.ok("成功", 0, commentsList);

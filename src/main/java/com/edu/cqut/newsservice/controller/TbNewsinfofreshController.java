@@ -143,7 +143,7 @@ public class TbNewsinfofreshController {
         news.setNewsTitle(title);
         news.setCreateDate(LocalDateTime.now());
         news.setTypeId(typeId);
-        news.setUserId(userService.getOne(wrapper).getUserId());
+        news.setUserId(1);
         newsinfofreshService.save(news);
         return TableResult.ok("发布成功");
     }
