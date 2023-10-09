@@ -10,7 +10,7 @@ public class Generator {
         }).packageConfig(builder -> {
             builder.parent("com.edu.cqut.newsservice"); // 设置父包名
         }).strategyConfig(builder -> {
-            builder.addInclude("tb_newsread"); // 设置需要生成的表名
+            builder.addInclude("tb_newssum"); // 设置需要生成的表名
         }).execute();
     }
 }
