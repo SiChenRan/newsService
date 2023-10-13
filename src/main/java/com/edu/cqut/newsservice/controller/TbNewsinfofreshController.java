@@ -148,6 +148,22 @@ public class TbNewsinfofreshController {
         return TableResult.ok("发布成功");
     }
 
+    @GetMapping("/getNewsCover")
+    public TableResult<TbNewsinfofresh> getNewsCover(Integer newsId) {
+        String cover = newsinfofreshService.getById(newsId).getNewsCover();
+        return TableResult.ok(cover);
+    }
+
+    @GetMapping("/getArticleSum")
+    public TableResult<TbNewsinfofresh> getArticleSum(String userName) {
+        QueryWrapper<TbNewsuser> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_name", userName);
+        QueryWrapper<TbNewsinfofresh> sumWrapper = new QueryWrapper<>();
+        sumWrapper.eq("user_id", 1);
+        long sum = newsinfofreshService.count(sumWrapper);
+        return TableResult.ok(String.valueOf(sum));
+    }
+
     //    @Auth(roles = {"SALES","ADMIN"})
     @PostMapping("/updateNews")
     public TableResult<TbNewsinfofresh> updateNews(TbNewsinfofresh news) {
